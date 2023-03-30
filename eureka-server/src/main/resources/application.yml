@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: sevicio-eureka-server
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
