@@ -73,16 +73,13 @@ public class MovimientoService {
 
 
 // Solo calcula una liquidacion sin guardar
-    public Movimiento calcularLiquidacion (LiquidacionInDTO in, Long id){
+        public Movimiento calcularLiquidacion (LiquidacionInDTO in, Long id){
 
         Optional<Liquidacion> liquidacionAcambiar = liquidacionService.findById(id);
         Movimiento movimiento = liquidacionAcambiar.get().getMovimiento();
 
         Liquidacion liquidacionNueva = liquidacionAcambiar.get();
 
-
-        //Instancio un objeto de la clase que me permite hacer los calculos
-        //CalculationsLiq calculationsLiq = new CalculationsLiq(in.getABD(), in.getGauge(), in.getTov(), in.getWaterGauge(), in.getWaterTov(), in.getKFra1(), in.getKFra2(), in.getTLam(), in.getTempL(), in.getTAmb(), in.getApi60(), in.getBsw());
 
         //transformo los datos de entrada necesarios de una liquidacion en una liquidacion completa
         Liquidacion liquidacioATomar = mapper.map(in);

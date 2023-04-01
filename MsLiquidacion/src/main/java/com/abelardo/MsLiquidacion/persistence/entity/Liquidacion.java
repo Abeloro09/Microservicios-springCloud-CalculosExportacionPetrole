@@ -41,6 +41,10 @@ public class Liquidacion {
     double nsv;
     String nombreTk;
 
+    //private Tank tank;
+
+    //private Quality quality;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_movimiento")

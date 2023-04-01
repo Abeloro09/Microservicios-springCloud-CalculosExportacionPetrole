@@ -23,10 +23,6 @@ public class LiquidacionService {
     @Autowired
     private  LiquidacionRepository liquidacionRepository;
 
-    @Autowired
-    private MovimientoService movimiento;
-
-
 
     public Liquidacion createLiquidacion(LiquidacionInDTO liquidacionInDTO){
         Liquidacion liquidacion = mapper.map(liquidacionInDTO);

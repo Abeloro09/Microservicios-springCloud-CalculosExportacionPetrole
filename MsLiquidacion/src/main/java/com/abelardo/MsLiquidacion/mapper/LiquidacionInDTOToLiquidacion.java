@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LiquidacionInDTOToLiquidacion implements IMapper<LiquidacionInDTO, Liquidacion>{
 
-    @Autowired
-    MovimientoService movimiento;
+    //@Autowired
+    //MovimientoService movimiento;
 
 
     @Override
@@ -23,21 +23,21 @@ public class LiquidacionInDTOToLiquidacion implements IMapper<LiquidacionInDTO, 
 
 
         //Instancio un objeto de la clase que me permite hacer los calculos
-        CalculationsLiq calculationsLiq = new CalculationsLiq(in.getABD(), in.getGauge(), in.getTov(), in.getWaterGauge(), in.getWaterTov(), in.getKFra1(), in.getKFra2(), in.getTLam(), in.getTempL(), in.getTAmb(), in.getApi60(), in.getBsw());
+        CalculationsLiq calculationsLiq = new CalculationsLiq(in.getABD(), in.getGauge(), in.getTov(), in.getWaterGauge(), in.getWaterTov(), in.getTank().getFra1(), in.getTank().getFra2(), in.getTank().getTempLamina(), in.getTempL(), in.getTAmb(), in.getQuality().getApi(), in.getQuality().getWater()+in.getQuality().getSediment());
 
         liquidacion.setABD(in.getABD());
         liquidacion.setGauge(in.getGauge());
         liquidacion.setTov(in.getTov());
         liquidacion.setWaterGauge(in.getWaterGauge());
         liquidacion.setWaterTov(in.getWaterTov());
-        liquidacion.setKFra1(in.getKFra1());
-        liquidacion.setKFra2(in.getKFra2());
-        liquidacion.setTLam(in.getTLam());
+        liquidacion.setKFra1(in.getTank().getFra1());
+        liquidacion.setKFra2(in.getTank().getFra2());
+        liquidacion.setTLam(in.getTank().getTempLamina());
         liquidacion.setTempL(in.getTempL());
         liquidacion.setTAmb(in.getTAmb());
-        liquidacion.setApi60(in.getApi60());
-        liquidacion.setBsw(in.getBsw());
-        liquidacion.setNombreTk(in.getNombreTk());
+        liquidacion.setApi60(in.getQuality().getApi());
+        liquidacion.setBsw(in.getQuality().getWater()+in.getQuality().getSediment());
+        liquidacion.setNombreTk(in.getTank().getNombreTk());
 
 
         liquidacion.setFra(calculationsLiq.fra());

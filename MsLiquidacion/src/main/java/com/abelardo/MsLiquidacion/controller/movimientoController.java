@@ -22,6 +22,8 @@ public class movimientoController {
         this.movimientoService = movimientoService;
         this.movimientoRepository = movimientoRepository;
     }
+
+
     @PostMapping
     public Movimiento createMovimiento(){
         return this.movimientoService.createMovimiento();
