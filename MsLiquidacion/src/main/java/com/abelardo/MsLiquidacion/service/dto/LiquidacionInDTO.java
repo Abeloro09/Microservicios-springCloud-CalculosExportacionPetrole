@@ -23,7 +23,7 @@ public class LiquidacionInDTO {
     //double api60; Quality
     //double bsw;  Quality
 
-    Quality quality;
-    Tank tank;
+    Long  idQua;
+    Long  idTank;
 
 }

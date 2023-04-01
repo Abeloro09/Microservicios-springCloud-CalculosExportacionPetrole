@@ -1,9 +1,13 @@
 package com.abelardo.MsLiquidacion.service;
 
+import com.abelardo.MsLiquidacion.client.QualityClientRest;
+import com.abelardo.MsLiquidacion.client.TankClientRest;
 import com.abelardo.MsLiquidacion.mapper.LiqViejaInDTOToLiqNueva;
 import com.abelardo.MsLiquidacion.mapper.LiquidacionInDTOToLiquidacion;
 import com.abelardo.MsLiquidacion.persistence.entity.Liquidacion;
 import com.abelardo.MsLiquidacion.persistence.entity.Movimiento;
+import com.abelardo.MsLiquidacion.persistence.entity.Quality;
+import com.abelardo.MsLiquidacion.persistence.entity.Tank;
 import com.abelardo.MsLiquidacion.persistence.repository.MovimientoRepository;
 import com.abelardo.MsLiquidacion.service.dto.DatosParaEditatLiq;
 import com.abelardo.MsLiquidacion.service.dto.LiquidacionInDTO;
@@ -25,6 +29,12 @@ public class MovimientoService {
 
     @Autowired
     private LiqViejaInDTOToLiqNueva mapper2;
+
+    @Autowired
+    private QualityClientRest qualityClientRest;
+
+    @Autowired
+    private TankClientRest tankClientRest;
 
 
     public Movimiento createMovimiento(){
@@ -74,6 +84,8 @@ public class MovimientoService {
 
 // Solo calcula una liquidacion sin guardar
         public Movimiento calcularLiquidacion (LiquidacionInDTO in, Long id){
+
+
 
         Optional<Liquidacion> liquidacionAcambiar = liquidacionService.findById(id);
         Movimiento movimiento = liquidacionAcambiar.get().getMovimiento();

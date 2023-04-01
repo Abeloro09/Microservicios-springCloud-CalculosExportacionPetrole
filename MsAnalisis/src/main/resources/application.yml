@@ -1,6 +1,11 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: ms-analisis
+
+
   datasource:
     driver-class-name: org.h2.Driver
     username: a
@@ -16,4 +21,13 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+
+
 
