@@ -17,4 +17,6 @@ public class Quality {
     private double viscosity;
     private double flashpoint;
 
+    String ABD;
+
 }

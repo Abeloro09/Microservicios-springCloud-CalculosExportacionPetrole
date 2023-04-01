@@ -1,1 +1,1 @@
-INSERT INTO qualities (descripcion, api, water, sediment, salt, sulfur, tan, viscosity, flashpoint) VALUES('501', 22.2, 0.152, 0.010, 4.2, 1.2, 0.98, 78.25, 50)
+INSERT INTO qualities (descripcion, api, water, sediment, salt, sulfur, tan, viscosity, flashpoint, ABD) VALUES('501', 22.0, 0.152, 0.010, 4.2, 1.2, 0.98, 78.25, 50, 'A')

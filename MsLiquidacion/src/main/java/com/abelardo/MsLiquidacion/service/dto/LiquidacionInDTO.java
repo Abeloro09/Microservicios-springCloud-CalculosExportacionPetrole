@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class LiquidacionInDTO {
 
     //String nombreTk; Quality
-    String ABD;
+    //String ABD;
     double gauge;
     double tov;
     double waterGauge;

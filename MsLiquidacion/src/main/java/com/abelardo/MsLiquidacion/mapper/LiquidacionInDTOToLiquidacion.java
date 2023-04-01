@@ -37,9 +37,9 @@ public class LiquidacionInDTOToLiquidacion implements IMapper<LiquidacionInDTO, 
 
 
         //Instancio un objeto de la clase que me permite hacer los calculos
-        CalculationsLiq calculationsLiq = new CalculationsLiq(in.getABD(), in.getGauge(), in.getTov(), in.getWaterGauge(), in.getWaterTov(), tank.get().getFra1(),  tank.get().getFra2(), tank.get().getTempLamina(), in.getTempL(), in.getTAmb(), quality.get().getApi(), quality.get().getWater()+quality.get().getSediment());
+        CalculationsLiq calculationsLiq = new CalculationsLiq(quality.get().getABD(), in.getGauge(), in.getTov(), in.getWaterGauge(), in.getWaterTov(), tank.get().getFra1(),  tank.get().getFra2(), tank.get().getTempLamina(), in.getTempL(), in.getTAmb(), quality.get().getApi(), quality.get().getWater()+quality.get().getSediment());
 
-        liquidacion.setABD(in.getABD());
+        liquidacion.setABD(quality.get().getABD());
         liquidacion.setGauge(in.getGauge());
         liquidacion.setTov(in.getTov());
         liquidacion.setWaterGauge(in.getWaterGauge());

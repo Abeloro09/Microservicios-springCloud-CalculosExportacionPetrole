@@ -24,6 +24,8 @@ public class Quality implements Serializable {
     private double viscosity;
     private double flashpoint;
 
+    String ABD;
+
 
 
 
