@@ -23,4 +23,11 @@ spring:
       ddl-auto: create
 
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+
+
 

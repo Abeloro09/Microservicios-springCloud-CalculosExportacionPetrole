@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: ms-liquidacion
@@ -16,5 +17,10 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
 
 
