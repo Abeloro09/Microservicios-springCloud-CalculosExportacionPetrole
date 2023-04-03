@@ -11,7 +11,7 @@ import java.util.Optional;
 @RequestMapping("/liquidacion")
 public class LiquidacionController {
 
-// No voy a expongo ningun Endpoint para esta entidad porque no se debe crear ninguna liquidacion sin haber cread un movimiento
+// No expongo ningun Endpoint para esta entidad porque no se debe crear ninguna liquidacion sin haber cread0 un movimiento, se crean al crear un movimiento.
 
 
 

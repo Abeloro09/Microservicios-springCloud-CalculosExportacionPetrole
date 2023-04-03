@@ -4,10 +4,8 @@ import com.abelardo.MsLiquidacion.client.QualityClientRest;
 import com.abelardo.MsLiquidacion.client.TankClientRest;
 import com.abelardo.MsLiquidacion.mapper.LiqViejaInDTOToLiqNueva;
 import com.abelardo.MsLiquidacion.mapper.LiquidacionInDTOToLiquidacion;
-import com.abelardo.MsLiquidacion.persistence.entity.Liquidacion;
-import com.abelardo.MsLiquidacion.persistence.entity.Movimiento;
-import com.abelardo.MsLiquidacion.persistence.entity.Quality;
-import com.abelardo.MsLiquidacion.persistence.entity.Tank;
+import com.abelardo.MsLiquidacion.persistence.entity.*;
+import com.abelardo.MsLiquidacion.persistence.repository.CargueRepository;
 import com.abelardo.MsLiquidacion.persistence.repository.MovimientoRepository;
 import com.abelardo.MsLiquidacion.service.dto.DatosParaEditatLiq;
 import com.abelardo.MsLiquidacion.service.dto.LiquidacionInDTO;
@@ -36,16 +34,20 @@ public class MovimientoService {
     @Autowired
     private TankClientRest tankClientRest;
 
+    @Autowired
+    private CargueService cargueService;
 
-    public Movimiento createMovimiento(){
+
+    public Movimiento createMovimiento(Long cargueId){
 
         //CREO LA LISTA DE LIQUIDACION VACIA
         List<Liquidacion> listaLiquidaciones = new ArrayList<>();
 
 
-        //CREO EL MOVIMIENTO CON LA LISTA DE LIQUIDACION VACIA
+        //CREO EL MOVIMIENTO VACIO---
         Movimiento movimiento = new Movimiento();
-
+        //ASIGNO EL MOVIMIENTO A UN CARGUE
+        movimiento.setCargue(cargueService.findById(cargueId).get());
         //GUARDO EL MOVIMIENTO EN BASE DE DATOS
         movimientoRepository.save(movimiento);
 
@@ -63,6 +65,7 @@ public class MovimientoService {
          movimiento.setDifFw(0);
          movimiento.setDifGsv(0);
          movimiento.setDifNsv(0);
+         movimiento.setCargue(cargueService.findById(cargueId).get());
 
          movimientoRepository.save(movimiento);
 
@@ -143,7 +146,7 @@ public class MovimientoService {
 
 
     }
-
+    //FUNCION PARA CALCULAR DIFERENCIAS
     public Movimiento calcularDiferencias(Movimiento movimiento){
 
         double tovIni = movimiento.getListaLIquidaciones().get(0).getTov();
