@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/cargue")
+@RequestMapping("/liquidacion/cargue")
 public class CargueController {
 
     @Autowired
@@ -23,8 +23,8 @@ public class CargueController {
         return  this.cargueService.createCargue();
     }
 
-    @GetMapping("/byId/{id}")
-    public Optional<Cargue> findById(Long cargueId){
+    @GetMapping("/byId/{cargueId}")
+    public Optional<Cargue> findById(@PathVariable("cargueId") Long cargueId){
         return this.cargueService.findById(cargueId);
     }
 

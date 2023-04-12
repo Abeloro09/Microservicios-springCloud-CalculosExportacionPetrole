@@ -1,0 +1,43 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ms-gateway-server
+
+
+
+  cloud:
+    gateway:
+      routes:
+        - id: ms-analisis
+          uri: lb://ms-analisis
+          predicates:
+            - Path=/analisis/analisis**
+          filters:
+            - StripPrefix=1
+        - id: ms-infotank
+          uri: lb://ms-infotank
+          predicates:
+            - Path=/infotank/**
+          filters:
+            #en este filtro se establece cuantos segmentos de la ruta del path se van a eliminar, es decir que lo que no se elimine es la peticion que le va a llegar al servicio
+            - StripPrefix=1
+
+        - id: ms-liquidacion
+          uri: lb://ms-liquidacion
+          predicates:
+            - Path=/liquidacion/cargue/**
+          filters:
+            - StripPrefix=2
+
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
