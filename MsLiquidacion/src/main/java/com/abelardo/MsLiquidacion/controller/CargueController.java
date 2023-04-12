@@ -11,7 +11,6 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/liquidacion/cargue")
 public class CargueController {
 
     @Autowired
@@ -23,7 +22,7 @@ public class CargueController {
         return  this.cargueService.createCargue();
     }
 
-    @GetMapping("/byId/{cargueId}")
+    @GetMapping("/cargueById/{cargueId}")
     public Optional<Cargue> findById(@PathVariable("cargueId") Long cargueId){
         return this.cargueService.findById(cargueId);
     }
@@ -32,7 +31,7 @@ public class CargueController {
     public List<Cargue> eliminarMovimiento(@PathVariable("id") Long id){
         return cargueService.eliminarCargue(id);
     }
-// pendiente por revisar
+    // pendiente por revisar
     @PutMapping("/editarCargue/{id}/")
     public Cargue editarCargue(@PathVariable("id") Long id, @RequestBody DatosEditarCargueDTO datosEditarCargueDTO){
 

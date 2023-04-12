@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/movimiento")
 public class movimientoController {
 
     private final MovimientoService movimientoService;
@@ -34,7 +33,7 @@ public class movimientoController {
         return this.movimientoService.findAll();
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/movimientoById/{id}")
     public Optional<Movimiento> findById(@PathVariable("id") Long id){
         Optional<Movimiento> result = this.movimientoService.findById(id);
         return result;

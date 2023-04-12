@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8090
 
 spring:
   application:
@@ -13,7 +13,8 @@ spring:
         - id: ms-analisis
           uri: lb://ms-analisis
           predicates:
-            - Path=/analisis/analisis**
+            - Path=/analisis/**
+              //Ejemplo en localhost:8090/analisis/byId/1 se elimina el segmento analisis y se envia la peticion ms-analisis+/byId/1
           filters:
             - StripPrefix=1
         - id: ms-infotank
@@ -39,5 +40,4 @@ eureka:
     service-url:
       defaultZone: http://localhost:8081/eureka
 
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+

@@ -10,7 +10,6 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/infotank")
 public class TankController {
 
     private final TankService tankService;

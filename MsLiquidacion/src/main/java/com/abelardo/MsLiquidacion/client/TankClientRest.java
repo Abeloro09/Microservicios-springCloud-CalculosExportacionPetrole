@@ -14,6 +14,8 @@ public interface TankClientRest {
 
     @GetMapping
     public List<Tank> findAll();
-    @GetMapping("/infotank/byId/{id}")
+
+    //@GetMapping("/infotank/byId/{id}")
+    @GetMapping("/byId/{id}")
     public Optional<Tank> findById(@PathVariable("id") Long id);
 }

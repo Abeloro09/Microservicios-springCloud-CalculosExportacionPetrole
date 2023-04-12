@@ -8,10 +8,10 @@
 		<version>2.3.12.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.abelardo.MsGateway</groupId>
-	<artifactId>servicio-gateway-server</artifactId>
+	<groupId>com.abelardo.gateway-server</groupId>
+	<artifactId>gateway-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>servicio-gateway-server</name>
+	<name>gateway-server</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>

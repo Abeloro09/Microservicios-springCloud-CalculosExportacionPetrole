@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/analisis")
 public class QualityController {
 
     private final QualityService qualityService;
