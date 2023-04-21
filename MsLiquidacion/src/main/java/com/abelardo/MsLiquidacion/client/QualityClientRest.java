@@ -14,7 +14,7 @@ public interface QualityClientRest {
     @GetMapping
     public List<Quality> findAll();
 
-    //@GetMapping("/analisis/byId/{id}")
+
     @GetMapping("/byId/{id}")
     public Optional<Quality> findById(@PathVariable("id") Long id);
 }

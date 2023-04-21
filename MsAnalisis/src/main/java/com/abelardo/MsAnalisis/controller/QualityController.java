@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class QualityController {
@@ -27,7 +28,16 @@ public class QualityController {
     }
 
     @GetMapping("/byId/{id}")
-    public Optional<Quality> findById(@PathVariable("id") Long id){
+    public Optional<Quality> findById(@PathVariable("id") Long id) throws InterruptedException {
+
+        //Para probar falla
+        if (id.equals(10L)){
+            throw new IllegalStateException("Calidad No Encontrada");
+        }
+        //para probar timeOut
+        if (id.equals(7L)){
+            TimeUnit.SECONDS.sleep(3L);
+        }
         return this.qualityService.findById(id);
     }
 

@@ -1,12 +1,16 @@
+
 server:
   port: 8090
+
+
+
 
 spring:
   application:
     name: ms-gateway-server
 
 
-
+#Configuracion Gateway
   cloud:
     gateway:
       routes:
@@ -14,8 +18,13 @@ spring:
           uri: lb://ms-analisis
           predicates:
             - Path=/analisis/**
-              //Ejemplo en localhost:8090/analisis/byId/1 se elimina el segmento analisis y se envia la peticion ms-analisis+/byId/1
+              #Ejemplo en localhost:8090/analisis/byId/1 se elimina el segmento analisis y se envia la peticion ms-analisis+/byId/1
           filters:
+            - name: CircuitBreaker
+              args:
+                name: productos
+                statusCodes: 500
+                fallbackUri: forward:/analisis//byId/5 # RUTA ALTERNATIVA EN CASO QUE NO ENCUENTRE EL REGISTRO, SE PUEDE REDIRECCIONAR A OTRO SERVICIO EN CASO QUE ESTE FALLE
             - StripPrefix=1
         - id: ms-infotank
           uri: lb://ms-infotank
@@ -32,9 +41,29 @@ spring:
           filters:
             - StripPrefix=2
 
+#Configuracion CirtuitBreaker
+resilience4j:
+  circuitbreaker:
+    configs:
+      defecto:
+        sliding-window-size: 6 #cantidad de llamadas recientes que el circuit breaker utiliza para monitorear el comportamiento del sistema
+        failure-rate-threshold: 50 # porcentaje máximo de llamadas que pueden fallar en la ventana deslizante antes de que el circuit breaker abra y evite que las llamadas adicionales lleguen al servicio
+        wait-duration-in-open-state: 20s #  tiempo que el circuit breaker permanece abierto antes de intentar probar el servicio nuevamente
+        permitted-number-of-calls-in-half-open-state: 4 # cuando el circuit breaker ha estado en el estado abierto durante el tiempo especificado, entrará en el estado de medio abierto, así que este parametro es el número de llamadas que se permiten que pasen a través del circuit breaker antes de determinar si el servicio es estable nuevamente
+        slow-call-rate-threshold: 50 # porcentaje máximo de llamadas lentas que pueden ocurrir en la ventana deslizante antes de que el circuit breaker abra
+        slow-call-duration-threshold: 2s # duración máxima permitida para una llamada antes de que se considere lenta
+    instances:
+      analisis:
+        base-config: defecto
+  timelimiter:
+    configs:
+      defecto:
+       timeout-duration: 2s
+    instances:
+      analisis:
+        base-config: defecto
 
-
-
+#Configuracion para registrarse en Eureka
 eureka:
   client:
     service-url:
