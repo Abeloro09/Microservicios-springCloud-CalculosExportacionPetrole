@@ -10,7 +10,7 @@ spring:
     name: ms-gateway-server
 
 
-#Configuracion Gateway
+  #Configuracion Gateway
   cloud:
     gateway:
       routes:
@@ -18,7 +18,7 @@ spring:
           uri: lb://ms-analisis
           predicates:
             - Path=/analisis/**
-              #Ejemplo en localhost:8090/analisis/byId/1 se elimina el segmento analisis y se envia la peticion ms-analisis+/byId/1
+            #Ejemplo en localhost:8090/analisis/byId/1 se elimina el segmento analisis y se envia la peticion ms-analisis+/byId/1
           filters:
             - name: CircuitBreaker
               args:
@@ -58,7 +58,7 @@ resilience4j:
   timelimiter:
     configs:
       defecto:
-       timeout-duration: 2s
+        timeout-duration: 2s
     instances:
       analisis:
         base-config: defecto
