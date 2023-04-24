@@ -6,7 +6,7 @@ spring:
     config:
       server:
         git:
-          uri: file:\\\E:\OneDrive\DOCUMENTOS PERSONALES\CODES\PROYECTO PORTAFOLIO\Microservicios-springCloud-CalculosExportacionPetrole\config
+          uri: https://github.com/Abeloro09/config.git
 
 server:
   port: 8888
