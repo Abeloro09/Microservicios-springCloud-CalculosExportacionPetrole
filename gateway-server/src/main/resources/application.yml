@@ -37,9 +37,27 @@ spring:
         - id: ms-liquidacion
           uri: lb://ms-liquidacion
           predicates:
-            - Path=/liquidacion/cargue/**
+            - Path=/liquidacion/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=1
+
+        - id: servicio-oauth
+          uri: lb://servicio-oauth
+          predicates:
+            - Path=/security/**
+          filters:
+            - StripPrefix=1
+
+        - id: servicio-usuarios
+          uri: lb://servicio-usuarios
+          predicates:
+            - Path=/usuarios/**
+          filters:
+            - StripPrefix=1
+
+
+
+
 
 #Configuracion CirtuitBreaker
 resilience4j:
