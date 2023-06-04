@@ -1,6 +1,8 @@
 package com.abelardo.MsLiquidacion.controller;
 
+import com.abelardo.MsLiquidacion.client.QualityClientRest;
 import com.abelardo.MsLiquidacion.persistence.entity.Movimiento;
+import com.abelardo.MsLiquidacion.persistence.entity.Quality;
 import com.abelardo.MsLiquidacion.persistence.repository.MovimientoRepository;
 import com.abelardo.MsLiquidacion.service.MovimientoService;
 import com.abelardo.MsLiquidacion.service.dto.DatosParaEditatLiq;
@@ -25,6 +27,9 @@ public class movimientoController {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private QualityClientRest qualityClientRest;
+
     @Value("${configuracion.texto}") private String texto;
     private final MovimientoService movimientoService;
     private final MovimientoRepository movimientoRepository;
@@ -41,9 +46,14 @@ public class movimientoController {
         return this.movimientoService.createMovimiento(cargueId);
     }
 
-    @GetMapping
+    @GetMapping("/movimientos")
     public List<Movimiento> findAll(){
         return this.movimientoService.findAll();
+    }
+
+    @GetMapping("/analisisById/{id}") //para probar la conexion con el otro microservicio
+    public Optional<Quality> findByI(@PathVariable("id") Long id){
+        return qualityClientRest.findById(id);
     }
 
     @GetMapping("/movimientoById/{id}")

@@ -3,6 +3,7 @@ package com.abelardo.MsAnalisis.service;
 import com.abelardo.MsAnalisis.persistence.identity.Quality;
 import com.abelardo.MsAnalisis.persistence.repository.QualityRepository;
 import org.springframework.stereotype.Service;
+import com.abelardo.MsAnalisis.mapper.inDTOToQuality;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,16 +13,20 @@ import java.util.Optional;
 public class QualityService {
 
     private final QualityRepository repository;
+    private inDTOToQuality inDTOToQuality;
 
     public QualityService(QualityRepository repository){
+
         this.repository=repository;
     }
 
     public Quality createQuality(Quality quality){
+
         return this.repository.save(quality);
     }
 
     public List<Quality> findall(){
+
         return this.repository.findAll();
     }
 
@@ -31,6 +36,7 @@ public class QualityService {
     }
 
     public Quality updateQuality (Quality quality){
+
         return this.repository.save(quality);
     }
 

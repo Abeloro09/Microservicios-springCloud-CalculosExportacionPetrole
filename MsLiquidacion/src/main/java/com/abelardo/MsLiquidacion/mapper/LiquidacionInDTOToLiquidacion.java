@@ -29,6 +29,8 @@ public class LiquidacionInDTOToLiquidacion implements IMapper<LiquidacionInDTO, 
     public Liquidacion map(LiquidacionInDTO in) {
 
         Optional<Quality> quality = qualityClientRest.findById(in.getIdQua());
+
+
         Optional<Tank> tank = tankClientRest.findById(in.getIdTank());
 
         //instancio un objeto de la clase que debo guardar en la base de datos

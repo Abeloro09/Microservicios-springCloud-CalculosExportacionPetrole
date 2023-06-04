@@ -6,6 +6,8 @@ import com.abelardo.MsLiquidacion.persistence.entity.Tank;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Column;
+
 @Data
 public class LiquidacionInDTO {
 

@@ -6,6 +6,7 @@ import com.abelardo.MsLiquidacion.service.dto.DatosEditarCargueDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +28,18 @@ public class CargueController {
         return this.cargueService.findById(cargueId);
     }
 
+    @GetMapping("/cargues/")
+    public  List<Cargue> findAll(){
+        return this.cargueService.findAll();
+    }
+
     @DeleteMapping("/eliminarCargue/{id}/")
     public List<Cargue> eliminarMovimiento(@PathVariable("id") Long id){
         return cargueService.eliminarCargue(id);
     }
     // pendiente por revisar
     @PutMapping("/editarCargue/{id}/")
-    public Cargue editarCargue(@PathVariable("id") Long id, @RequestBody DatosEditarCargueDTO datosEditarCargueDTO){
+    public Cargue editarCargue(@PathVariable("id") Long id, @RequestBody @Valid DatosEditarCargueDTO datosEditarCargueDTO){
 
 
 

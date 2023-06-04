@@ -18,19 +18,20 @@ public class CargueService {
 
     public Cargue createCargue() {
 
-
         //CREO EL CARGUE
         Cargue cargue = new Cargue();
         cargueRepository.save(cargue);
 
         return cargue;
-
     }
 
     public Optional<Cargue> findById(Long cargueId) {
         return cargueRepository.findById(cargueId);
     }
 
+    public List<Cargue> findAll(){
+        return cargueRepository.findAll();
+    }
     public List<Cargue> eliminarCargue(Long id) {
 
         cargueRepository.deleteById(id);
@@ -49,6 +50,7 @@ public class CargueService {
         updatedCargue.setReferencia(datosEditarCargueDTO.getReferencia());
         updatedCargue.setReferenciaCliente(datosEditarCargueDTO.getReferenciaCliente());
         updatedCargue.setTerminal(datosEditarCargueDTO.getTerminal());
+        updatedCargue.setNombreBuque(datosEditarCargueDTO.getNombreBuque());
         return cargueRepository.save(updatedCargue);
     }
 

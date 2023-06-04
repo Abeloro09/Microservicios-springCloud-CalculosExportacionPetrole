@@ -89,5 +89,12 @@ public class QualityController {
         return new ResponseEntity<Map<String, String>>(json, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public List<Quality> deleteTank(@PathVariable("id") Long id){
+        qualityService.deleteQuality(id);
+        return this.qualityService.findall();
+
+    }
+
 
 }

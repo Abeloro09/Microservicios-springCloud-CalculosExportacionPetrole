@@ -12,17 +12,37 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SpringSecurityConfig {
 
 
-    //private JwtAuthenticationFilter authenticationFilter;
-
+    @Autowired
+    private JwtAuthenticationFilter authenticationFilter;
 
     @Bean
     public SecurityWebFilterChain configure(ServerHttpSecurity http) {
         return http.authorizeExchange()
                 .pathMatchers("/security/oauth/**").permitAll()
-                .pathMatchers(HttpMethod.GET, "/infotank",
-                        "/infotank/byId/{id}").permitAll()
+                .pathMatchers(HttpMethod.GET,"/analisis",
+                        "/analisis/byId/{id}",
+                        "/infotank",
+                        "/infotank/byId/{id},",
+                        "/liquidacion/cargues",
+                        "/liquidacion/cargueById/{cargueId}",
+                        "/liquidacion/movimientos",
+                        "/liquidacion/movimientoById/{id}",
+                        "/usuarios/usuarios").permitAll()
+                .pathMatchers(HttpMethod.POST, "/analisis",
+                        "/infotank",
+                        "/liquidacion/crearmovimiento/{cargueId}").permitAll()
+                .pathMatchers(HttpMethod.PUT, "/analisis/update/{id}",
+                        "/infotank/update/{id}",
+                        "/liquidacion/calcularLiquidacion/{id}/",
+                        "/liquidacion/editarLiquidacion/{id}/").permitAll()
+                .pathMatchers(HttpMethod.DELETE, "/analisis/delete/{id}",
+                        "/infotank/delete/{id}",
+                        "/liquidacion/eliminarMovimiento/{id}/").permitAll()
+                .pathMatchers(HttpMethod.GET, "/usuarios/usuarios/{id}").hasAnyRole("ADMIN", "USER")
+                .pathMatchers("/liquidacion/cargues").hasRole("ADMIN")
                 .anyExchange().authenticated()
-                .and().csrf().disable()
+                .and().addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .csrf().disable()
                 .build();
     }
 

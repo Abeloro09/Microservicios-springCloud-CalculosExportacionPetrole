@@ -14,19 +14,19 @@ public class Tank implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "NOMBRETK")
+    @Column(name = "nombretk", nullable = false)
     private String nombreTk;
-    @Column(name = "CAPACIDADNOMINAL")
+    @Column(name = "capacidadnominal", nullable = false)
     private double capacidadNominal;
-    @Column(name = "INICIOZONACRITICA")
-    private int inicioZonaCritica;
-    @Column(name = "FINALZONACRITICA")
-    private int finalZonaCritica;
-    @Column(name = "TEMPLAMINA")
+    @Column(name = "iniciozonacritica",nullable = false)
+    private double inicioZonaCritica;
+    @Column(name = "finalzonacritica",nullable = false)
+    private double finalZonaCritica;
+    @Column(name = "templamina", nullable = false)
     private double tempLamina;
-    @Column(name = "FRA1")
+    @Column(name = "fra1", nullable = false)
     private double fra1;
-    @Column(name = "FRA2")
+    @Column(name = "fra2",nullable = false)
     private double fra2;
 
 
