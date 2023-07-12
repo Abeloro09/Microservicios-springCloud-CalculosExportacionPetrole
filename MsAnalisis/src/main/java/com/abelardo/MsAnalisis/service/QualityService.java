@@ -2,8 +2,11 @@ package com.abelardo.MsAnalisis.service;
 
 import com.abelardo.MsAnalisis.persistence.identity.Quality;
 import com.abelardo.MsAnalisis.persistence.repository.QualityRepository;
+import com.abelardo.MsAnalisis.service.dto.InDTOQuality;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.abelardo.MsAnalisis.mapper.inDTOToQuality;
+import com.abelardo.MsAnalisis.mapper.InDTOToQuality;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,16 +16,23 @@ import java.util.Optional;
 public class QualityService {
 
     private final QualityRepository repository;
-    private inDTOToQuality inDTOToQuality;
 
-    public QualityService(QualityRepository repository){
+    private InDTOToQuality inDTOToQuality;
+
+    public QualityService(QualityRepository repository, InDTOToQuality inDTOToQuality){
 
         this.repository=repository;
+        this.inDTOToQuality=inDTOToQuality;
     }
 
-    public Quality createQuality(Quality quality){
-
+    public Quality createQuality(InDTOQuality inDTOQuality){
+        Quality quality = inDTOToQuality.map(inDTOQuality);
         return this.repository.save(quality);
+    }
+
+    public Page<Quality> findall(Pageable paginacion){
+
+        return this.repository.findAll(paginacion);
     }
 
     public List<Quality> findall(){

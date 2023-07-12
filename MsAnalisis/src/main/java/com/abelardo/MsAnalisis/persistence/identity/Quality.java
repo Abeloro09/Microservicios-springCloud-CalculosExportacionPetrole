@@ -16,6 +16,11 @@ public class Quality implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 50)
+    private String referencia;
+    @Column(length = 50)
+    private String referencia_cliente;
     private String descripcion;
     private double api;
     private double water;

@@ -1,16 +1,15 @@
 package com.abelardo.MsAnalisis.mapper;
 
 import com.abelardo.MsAnalisis.persistence.identity.Quality;
-import com.abelardo.MsAnalisis.service.dto.inDTOQuality;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.abelardo.MsAnalisis.service.dto.InDTOQuality;
 import org.springframework.stereotype.Component;
 
 @Component
-public class inDTOToQuality implements IMapper<inDTOQuality, Quality> {
+public class InDTOToQuality implements IMapper<InDTOQuality, Quality> {
 
 
     @Override
-    public Quality map(inDTOQuality in) {
+    public Quality map(InDTOQuality in) {
          Quality quality = new Quality();
 
          quality.setDescripcion(in.getDescripcion());

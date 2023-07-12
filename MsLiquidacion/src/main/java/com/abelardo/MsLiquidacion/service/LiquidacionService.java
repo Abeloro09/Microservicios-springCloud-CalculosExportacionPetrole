@@ -24,7 +24,8 @@ public class LiquidacionService {
     private  LiquidacionRepository liquidacionRepository;
 
 
-    public Liquidacion createLiquidacion(LiquidacionInDTO liquidacionInDTO){
+    public Liquidacion createLiquidacion(LiquidacionInDTO liquidacionInDTO, Long id){
+
         Liquidacion liquidacion = mapper.map(liquidacionInDTO);
         liquidacionRepository.save(liquidacion);
         return liquidacion;

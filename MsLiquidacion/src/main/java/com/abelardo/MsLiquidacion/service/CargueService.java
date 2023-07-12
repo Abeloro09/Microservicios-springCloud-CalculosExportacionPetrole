@@ -1,10 +1,10 @@
 package com.abelardo.MsLiquidacion.service;
 
 import com.abelardo.MsLiquidacion.persistence.entity.Cargue;
-import com.abelardo.MsLiquidacion.persistence.entity.Movimiento;
 import com.abelardo.MsLiquidacion.persistence.repository.CargueRepository;
 import com.abelardo.MsLiquidacion.service.dto.DatosEditarCargueDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class CargueService {
 
-    @Autowired
     private CargueRepository cargueRepository;
+
+    public CargueService(CargueRepository cargueRepository) {
+        this.cargueRepository = cargueRepository;
+    }
+
 
     public Cargue createCargue() {
 
@@ -32,12 +36,18 @@ public class CargueService {
     public List<Cargue> findAll(){
         return cargueRepository.findAll();
     }
-    public List<Cargue> eliminarCargue(Long id) {
+
+    public Page<Cargue> findAll(Pageable paginacion){
+
+        return cargueRepository.findAll(paginacion);
+    }
+
+
+    public void eliminarCargue(Long id) {
 
         cargueRepository.deleteById(id);
 
-        return cargueRepository.findAll();
-    }
+       }
 
     public Cargue updateCargue(Long id, DatosEditarCargueDTO datosEditarCargueDTO) {
 

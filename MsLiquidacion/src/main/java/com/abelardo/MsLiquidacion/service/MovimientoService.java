@@ -11,32 +11,38 @@ import com.abelardo.MsLiquidacion.service.dto.DatosParaEditatLiq;
 import com.abelardo.MsLiquidacion.service.dto.LiquidacionInDTO;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 @Data
 @Service
 public class MovimientoService {
-    @Autowired
+
     private MovimientoRepository movimientoRepository;
-
-    @Autowired
     private final LiquidacionService liquidacionService;
-    @Autowired
     private  LiquidacionInDTOToLiquidacion mapper;
-
-    @Autowired
     private LiqViejaInDTOToLiqNueva mapper2;
-
-    @Autowired
     private QualityClientRest qualityClientRest;
-
-    @Autowired
     private TankClientRest tankClientRest;
-
-    @Autowired
     private CargueService cargueService;
+    public MovimientoService(MovimientoRepository movimientoRepository,
+                             LiquidacionService liquidacionService,
+                             LiquidacionInDTOToLiquidacion mapper,
+                             LiqViejaInDTOToLiqNueva mapper2,
+                             QualityClientRest qualityClientRest,
+                             TankClientRest tankClientRest,
+                             CargueService cargueService) {
 
+        this.movimientoRepository = movimientoRepository;
+        this.liquidacionService = liquidacionService;
+        this.mapper = mapper;
+        this.mapper2 = mapper2;
+        this.qualityClientRest = qualityClientRest;
+        this.tankClientRest = tankClientRest;
+        this.cargueService = cargueService;
+    }
 
     public Movimiento createMovimiento(Long cargueId){
 
@@ -75,6 +81,10 @@ public class MovimientoService {
 
     public List<Movimiento> findAll(){
         return  movimientoRepository.findAll();
+    }
+
+    public Page<Movimiento> findAll(Pageable paginacion){
+        return  movimientoRepository.findAll(paginacion);
     }
 
     public Optional<Movimiento> findById(Long id){
@@ -197,11 +207,10 @@ public class MovimientoService {
 
     }
 
-    public List<Movimiento> eliminarMovimiento(Long id){
+    public void eliminarMovimiento(Long id){
 
         movimientoRepository.deleteById(id);
 
-        return  movimientoRepository.findAll();
-    }
+            }
 
 }

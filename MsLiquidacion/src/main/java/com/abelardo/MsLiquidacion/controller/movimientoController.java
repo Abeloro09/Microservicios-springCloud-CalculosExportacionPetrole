@@ -11,10 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,64 +28,78 @@ import java.util.Optional;
 
 @RefreshScope
 @RestController
+@RequestMapping("/movimiento")
 public class movimientoController {
 
+
+
+    private final QualityClientRest qualityClientRest;
+
+    private final MovimientoService movimientoService;
+    private final MovimientoRepository movimientoRepository;
+    @Value("${configuracion.texto}") private String texto;
     @Autowired
     private Environment env;
 
-    @Autowired
-    private QualityClientRest qualityClientRest;
-
-    @Value("${configuracion.texto}") private String texto;
-    private final MovimientoService movimientoService;
-    private final MovimientoRepository movimientoRepository;
 
     public movimientoController(MovimientoService movimientoService,
-                                MovimientoRepository movimientoRepository) {
+                                MovimientoRepository movimientoRepository,
+                                QualityClientRest qualityClientRest) {
+
         this.movimientoService = movimientoService;
         this.movimientoRepository = movimientoRepository;
+        this.qualityClientRest = qualityClientRest;
     }
 
 
     @PostMapping("/crearmovimiento/{cargueId}")
-    public Movimiento createMovimiento(@PathVariable("cargueId") Long cargueId){
-        return this.movimientoService.createMovimiento(cargueId);
+    public ResponseEntity <Movimiento> createMovimiento(@PathVariable("cargueId") Long cargueId, UriComponentsBuilder uriComponentsBuilder){
+        Movimiento movimiento = this.movimientoService.createMovimiento(cargueId);
+        URI url = uriComponentsBuilder.path("/movimiento/{id}").buildAndExpand(movimiento.getId()).toUri();
+        return ResponseEntity.ok(movimiento);
     }
 
     @GetMapping("/movimientos")
-    public List<Movimiento> findAll(){
-        return this.movimientoService.findAll();
+    public ResponseEntity <Page<Movimiento>> findAll(@PageableDefault(size = 2) Pageable paginacion){
+
+        return ResponseEntity.ok(this.movimientoService.findAll(paginacion));
     }
 
-    @GetMapping("/analisisById/{id}") //para probar la conexion con el otro microservicio
-    public Optional<Quality> findByI(@PathVariable("id") Long id){
-        return qualityClientRest.findById(id);
-    }
 
     @GetMapping("/movimientoById/{id}")
-    public Optional<Movimiento> findById(@PathVariable("id") Long id){
-        Optional<Movimiento> result = this.movimientoService.findById(id);
-        return result;
+    public ResponseEntity<Optional<Movimiento>>findById(@PathVariable("id") Long id){
+        Optional<Movimiento> movimientoOptional = this.movimientoService.findById(id);
+
+        if (movimientoOptional.isPresent()){
+            return ResponseEntity.ok(movimientoOptional);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
     }
 
 
     @PutMapping("/calcularLiquidacion/{id}/")
-    public Optional<Movimiento> calcularLiquidacion(@PathVariable("id") Long id, @RequestBody LiquidacionInDTO liqInDTO) {
-        return Optional.ofNullable(movimientoService.calcularLiquidacion(liqInDTO, id));
+    public ResponseEntity<Optional<Movimiento>> calcularLiquidacion(@PathVariable("id") Long id,
+                                                                    @RequestBody @Valid LiquidacionInDTO liquidacionInDTO) {
+        return ResponseEntity.ok(Optional.ofNullable(movimientoService.calcularLiquidacion(liquidacionInDTO, id)));
 
     }
 
     @PutMapping("/editarLiquidacion/{id}/")
-    public Optional<Movimiento> editarLiquidacion(@PathVariable("id") Long id, @RequestBody DatosParaEditatLiq datosParaEditatLiq) {
-        return Optional.ofNullable(movimientoService.editarLiquidacion(datosParaEditatLiq, id));
+    public ResponseEntity<Optional<Movimiento>> editarLiquidacion(@PathVariable("id") Long id,
+                                                                  @RequestBody @Valid DatosParaEditatLiq datosParaEditatLiq) {
+        return ResponseEntity.ok(Optional.ofNullable(movimientoService.editarLiquidacion(datosParaEditatLiq, id)));
 
     }
 
     @DeleteMapping("/eliminarMovimiento/{id}/")
-    public List<Movimiento> eliminarMovimiento(@PathVariable("id") Long id){
-        return movimientoService.eliminarMovimiento(id);
+    public ResponseEntity eliminarMovimiento(@PathVariable("id") Long id){
+        movimientoService.eliminarMovimiento(id);
+        return  ResponseEntity.noContent().build();
     }
 
+    //Probando obtener configuracion del servidor de configuraciones
     @GetMapping("/obtener-config")
     public ResponseEntity<?> obtenerConfig(@Value("${server.port}") String puerto){
 
